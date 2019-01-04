@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图表</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta name = "viewport" content = "width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0" />
+  <!--<link rel="stylesheet" href="dist/idangerous.swiper.css">-->
+  <link rel="stylesheet" href="./style/css/common.css">
+  <link rel="stylesheet" href="./style/css/chart.css">
+  <link href='./style/css/style.css' rel='stylesheet'/>
+  <style>
+    html,body{
+      width: 100%;overflow-x: hidden;
+
+    }
+  </style>
+</head>
+<body >
+
+<div class="device" >
+  <div class="title2" style="margin-bottom: 0">
+    <!--<div class="line2"></div>-->
+    <div class="font-4">残疾类别</div>
+
+    <span class="f-r" style="color: #6a6a6a;font-size: 16px">
+      <span>残疾人总数：</span>
+    <span class="green fs16" id="total">0</span>
+    <span class="green fs16">人</span>
+    </span>
+  </div>
+  <div class="" style="color: #6a6a6a;font-size: 16px;text-align:left;margin-bottom: 20px">
+    <span><span class="numTitle">残疾人数统计图</span>（<span class="numsYop">1</span>/4）</span>
+  </div>
+
+  <div id="wrapper" >
+    <div id="">
+      <div id="tabSlider2" class="tabSlider">
+        <div class="tabSlider-bd">
+          <div class="tabSlider-wrap">
+            <div class="tabSlider-box curr container">
+              <div class="chart_box " id="chart1"></div>
+            </div>
+            <div class="tabSlider-box curr container">
+              <div class="chart_box " id="chart10"></div>
+            </div>
+            <div class="tabSlider-box curr container">
+              <div class="chart_box " id="chart11"></div>
+            </div>
+            <div class="tabSlider-box container">
+              <table style="color: #303030">
+                <thead>
+                <tr>
+                  <td style="width: 33%">类别</td>
+                  <td width="width: 33%">百分比</td>
+                  <td>人数</td>
+                </tr>
+                </thead>
+                <tbody id="table_type">
+                <tr>
+                  <td class="fi">
+                    <div class="d-i colors" style="background-color:red"></div>
+                    <span>change </span>
+                  </td>
+                  <td>centnum</td>
+                  <td>num</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="title2">
+    <div class="title2 g" style="margin-bottom: 0">
+      <!--<div class="line2"></div>-->
+      <div class="font-4">残疾等级</div>
+    </div>
+    <div class="" style="color: #6a6a6a;font-size: 16px;text-align:right">
+      <span>残疾人数统计图（<span class="nums">1</span>/7）</span>
+    </div>
+  </div>
+
+  <div id="wrapper " class="">
+    <div id="scroller">
+      <div id="tabSlider1" class="tabSlider">
+        <div class="tabSlider-bd">
+          <div class="tabSlider-wrap">
+            <div class="tabSlider-box curr contaners1">
+              <div class="chart_box " id="chart2"></div>
+            </div>
+            <div class="tabSlider-box contaners1">
+              <div class="chart_box " id="chart3"></div>
+            </div>
+            <div class="tabSlider-box contaners1">
+              <div class="chart_box " id="chart4"></div>
+            </div>
+            <div class="tabSlider-box contaners1">
+              <div class="chart_box " id="chart5"></div>
+            </div>
+            <div class="tabSlider-box contaners1">
+              <div class="chart_box " id="chart6"></div>
+            </div>
+            <div class="tabSlider-box contaners1">
+              <div class="chart_box " id="chart7"></div>
+            </div>
+            <div class="tabSlider-box contaners1">
+              <div class="chart_box " id="chart8"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="title2 b" style="padding-top: 30px">
+    <!--<div class="line2"></div>-->
+    <div class="font-4">辖区残疾人口数统计图</div>
+  </div>
+  <div class=" container" style="overflow: auto" >
+    <div class="" id="chart9" style="width:500px"></div>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="./lib/zepto.js"></script>
+<script src="lib/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="./lib/tabslider.js"></script>
+<script type="text/javascript">
+
+  $(function(){
+    app.TabSlider('#tabSlider1');
+    app.TabSlider('#tabSlider2',{type:'line'});
+  });
+
+</script>
+
+<script src="lib/layer/2.1/layer.js"></script>
+<script src="lib/echarts.min.js"></script>
+<script src="./js/getDataFromApp.js"></script>
+<script src="./js/chart.js"></script>
+
+</body>
+</html>

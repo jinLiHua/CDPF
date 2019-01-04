@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>残疾人登记表</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../lib/light7/light7.min.css">
+    <link rel="stylesheet" href="../lib/light7/light7-swiper.min.css">
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/common/common.css">
+    <style type="text/css">
+   		.item-after{
+    		border: 1px solid #3AB54A;
+    		border-radius: 5px;
+    		
+    	}
+    	.w_isActive{
+    		background-color: #edfdf4!important;
+    	}
+    	.item-after>select,
+    	.item-after>textarea,
+    	.item-after>input{
+    		padding-left: 4px;
+    	}
+    </style>
+</head>
+<body>
+<div class="page d-n"></div>
+<div id="write1">
+    <div class="h-title">残疾人登记表</div>
+    <div class="h-sub-title">
+        <div class="h-ti-cut"></div>
+        <span>个人基本情况（1/7）</span>
+    </div>  
+    <div class="h-grey"></div>
+    <table class="l-r-table">
+        <tr class="not-tr dis" v-if="isDc">
+            <td class="item-title"><div class="redPoint" v-if="ifSur"></div> 调查方式</td>
+        </tr>
+        <tr class="not-tr dis" v-if="isDc">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" v-model="survey" id="surveyMethod">
+                <input type="hidden" placeholder="" v-model="surveyMethod">
+            </td>
+        </tr>
+        <tr class="not-tr">
+            <td class="item-title"><div class="redPoint" v-if="ifStatusp"></div> 状态标注</td>
+        </tr>
+        <tr class="not-tr">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="perSta" readonly v-on:click="openStatus" v-model="statusInput">
+            </td>
+        </tr>
+        <tr class="not-tr dis">
+            <td class="item-title" v-bind:class="{ redWord: !isr1}"><div class="redPoint" v-if="ifR1p"></div><a href="javascript:;" data-code="R1" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R1.姓名</td>
+        </tr>
+        <tr class="not-tr dis">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请输入真实姓名" v-model="name">
+            </td>
+        </tr>
+        <tr class="not-tr dis">
+            <td class="item-title" v-bind:class="{ redWord: !issex}"><div class="redPoint" v-if="ifR2p"></div> 性别</td>
+        </tr>
+        <tr class="not-tr dis">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" v-model="genderName" id="genderName">
+                <input type="hidden" placeholder="" v-model="gender">
+            </td>
+        </tr>
+        <tr class="not-tr">
+            <td class="item-title" v-bind:class="{ redWord: !isr2}"><div class="redPoint" v-if="ifR2p"></div><a href="javascript:;" data-code="R2" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R2.残疾人证号或身份证号</td>
+        </tr>
+        <tr class="not-tr">
+            <td class="t-r item-after h-bb sfzh">
+                <input type="text" placeholder="请输入" v-model="disabilityCard" v-on:change="getAgeNum">
+                <!--<textarea placeholder="请输入" v-model="disabilityCard" v-on:change="getAgeNum"></textarea>-->
+            </td>
+        </tr>
+        <tr v-if="grade">
+            <td class="item-title" v-bind:class="{ redWord: !isgrade}"><div class="redPoint" v-if="ifGradep"></div> 残疾人等级</td>
+        </tr>
+        <tr v-if="grade">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="grade">
+                <input type="hidden" placeholder="请选择" v-model="gradeNum">
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !isr3}"><div class="redPoint" v-if="ifR3p"></div><a href="javascript:;" data-code="R3" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R3.户口性质</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="residenceType">
+                <input type="hidden" placeholder="" v-model="residenceType">
+            </td>
+        </tr>
+    </table>
+    <div class="h-grey"></div>
+    <table class="l-r-table">
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !isg4}"><div class="redPoint" v-if="ifG4p"></div>地址</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after">
+                <textarea type="text" placeholder="请选择" id="city" readonly v-on:click="openAdd" value="贵州省"></textarea>
+            </td>
+        </tr>
+        <tr v-if="R4">
+            <td class="item-title" v-bind:class="{ redWord: !isr4}"><div class="redPoint" v-if="ifR4p"></div><a href="javascript:;" data-code="R4" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R4.婚姻状况</td>
+        </tr>
+        <tr v-if="R4">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="20周岁及以上填报" id="maritalStatus">
+                <input type="hidden" placeholder="" v-model="maritalStatus">
+            </td>
+        </tr>
+        <tr v-if="R5">
+            <td class="item-title" v-bind:class="{ redWord: !isr5}"><div class="redPoint" v-if="ifR5p"></div><a href="javascript:;" data-code="R5" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R5.联系人姓名</td>
+        </tr>
+        <tr v-if="R5">
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="智力、精神和17周岁及以下残疾人填报" v-model="linkmanName">-->
+                <textarea style="height: 2.5rem" type="text" placeholder="智力、精神和17周岁及以下残疾人填报" v-model="linkmanName"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !isr6}"><div class="redPoint" v-if="ifR6p"></div><a href="javascript:;" data-code="R6" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R6.本人或联系人电话</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="固话:格式如（0931-8816368）" v-model="phone" id="phone">
+                <!--<textarea placeholder="固话:格式如（0931-8816368）" v-model="phone" id="phone"></textarea>-->
+            </td>
+        </tr>
+        <tr>
+
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请输入手机" v-model="cellphone" id="cellphone">
+            </td>
+        </tr>
+        <tr>
+            <td class="t-r item-after  h-bb">
+                <input type="text" placeholder="请输入电子邮箱" v-model="email" id="email">
+            </td>
+        </tr>
+    </table>
+    <div class="h-grey"></div>
+    <table class="l-r-table">
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !isr7}"><div class="redPoint" v-if="ifR7p"></div><a href="javascript:;" data-code="R7" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R7.是否在敬(养)老院、福利院、荣军院等居住</td>
+        </tr>
+        <tr>
+
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="isWelfareHouse">
+                <input type="hidden" placeholder="" v-model="isWelfareHouse">
+            </td>
+        </tr>
+        <tr class="not-tr"><td></td></tr>
+        <tr class="not-tr"><td></td></tr>
+    </table>
+    <div class="fix-sub">
+        <div class="fix-btn" v-bind:class="{ac:isSub}">提交并下一项</div>
+    </div>
+    <!--状态标注-->
+    <div class="pop-win address-pop" v-if="sStatus">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeStatus(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeStatus(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li" v-for="a in personalStatusA" v-on:click="choStatus(a,$event)" v-if="a.isF" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 你的html代码 -->
+<script type='text/javascript' src='../lib/jquery-1.9.1.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/vue.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-swiper.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-city-picker.js' charset='utf-8'></script>
+
+<script src="../js/commonCode.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/wirte1.js"></script>
+</body>
+</html>

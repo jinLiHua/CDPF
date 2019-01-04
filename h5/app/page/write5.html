@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>残疾人登记表</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../lib/light7/light7.min.css">
+    <link rel="stylesheet" href="../lib/light7/light7-swiper.min.css">
+
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/common/common.css">
+    <!--<link rel="stylesheet" href="../css/wirte1.css">-->
+    	<style type="text/css">
+    		.item-after{
+    		border: 1px solid #3AB54A;
+    		border-radius: 5px;
+    		
+    	}
+    	.w_isActive{
+    		background-color: #edfdf4!important;
+    	}
+    	.item-after>select,
+    	.item-after>textarea,
+    	.item-after>input{
+    		
+    		padding-left: 4px;;
+    	}
+    	</style>
+</head>
+<body>
+<div class="page d-n"></div>
+<div id="write5">
+    <div class="h-title">残疾人登记表</div>
+    <div class="h-sub-title">
+        <div class="h-ti-cut"></div>
+        <span> 基本医疗与康复（5/7）</span>
+    </div>
+    <div class="h-grey"></div>
+    <table class="l-r-table">
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !R31check}"><div class="redPoint" v-if="ifR31p"></div><a href="javascript:;" data-code="R31" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R31.个人或家庭是否签订家庭医生服务协议</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="familyDoctor">
+                <input type="hidden" placeholder="" v-model="familyDoctor">
+            </td>
+
+        </tr>
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !R32check}"><div class="redPoint" v-if="ifR32p"></div><a href="javascript:;" data-code="R32" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R32.除残疾外，过去两周内是否患有其他疾病</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="otherDisease">
+                <input type="hidden" placeholder="" v-model="otherDisease">
+            </td>
+
+        </tr>
+        <tr v-if="isSR33">
+            <td class="item-title" v-bind:class="{ redWord: !R33check}"><div class="redPoint" v-if="ifR33p"></div><a href="javascript:;" data-code="R33" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R33.过去两周内是否已就诊或治疗</td>
+        </tr>
+        <tr v-if="isSR33">
+
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="treat">
+                <input type="hidden" placeholder="" v-model="treat">
+            </td>
+        </tr>
+        <tr v-if="isSR34">
+            <td class="item-title" v-bind:class="{ redWord: !R34check}"><div class="redPoint" v-if="ifR34p"></div><a href="javascript:;" data-code="R34" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R34.未就诊或治疗原因</td>
+        </tr>
+        <tr v-if="isSR34">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="可多选" id="untreatedCause" readonly v-on:click="openShowR34" v-model="R34input">
+            </td>
+        </tr>
+    </table>
+    <div class="h-grey"></div>
+    <table class="l-r-table">
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !R35check}"><div class="redPoint" v-if="ifR35p"></div><a href="javascript:;" data-code="R35" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R35.针对自身残疾，动态更新年度内是否得到或使用过以下服务</td>
+        </tr>
+        <tr>
+
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="请选择" id="useService" readonly v-on:click="openShowR35" v-model="R35input">-->
+                <textarea placeholder="请选择" id="useService" readonly v-on:click="openShowR35"  v-model="R35input"></textarea>
+            </td>
+        </tr>
+        <tr v-if="isSR36">
+            <td class="item-title" v-bind:class="{ redWord: !R36check}"><div class="redPoint" v-if="ifR36p"></div><a href="javascript:;" data-code="R36" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R36.未得到康复服务的原因</td>
+        </tr>
+        <tr v-if="isSR36">
+
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="请选择" id="notRecoveredCause" readonly v-on:click="openShowR36" v-model="R36input">-->
+                <textarea placeholder="请选择" id="notRecoveredCause" readonly v-on:click="openShowR36"  v-model="R36input"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title" v-bind:class="{ redWord: !R37check}"><div class="redPoint" v-if="ifR37p"></div><a href="javascript:;" data-code="R37" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R37.针对自身残疾，目前是否还需要以下服务</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="1-5项可多选" id="needService" readonly v-on:click="openShowR37" v-model="R37input">-->
+                <textarea placeholder="1-5项可多选" id="needService" readonly v-on:click="openShowR37"  v-model="R37input"></textarea>
+            </td>
+        </tr>
+
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+
+    </table>
+    <div class="fix-sub">
+        <div class="fix-btn" v-bind:class="{ac:isSub}">提交并下一项</div>
+    </div>
+
+    <!--未就诊或治疗原因-->
+    <div class="pop-win address-pop" v-if="showR34">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowR34(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowR34(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li R34-li" v-for="a in untreatedCauseA" v-on:click="choR34(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--针对自身残疾，动态更新年度内是否得到或使用过以下服务-->
+    <div class="pop-win address-pop" v-if="showR35">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowR35(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowR35(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li" v-for="a in useServiceA" v-on:click="choR35(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--未得到康复服务的原因-->
+    <div class="pop-win address-pop" v-if="showR36">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowR36(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowR36(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li" v-for="a in notRecoveredCauseA" v-on:click="choR36(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--针对自身残疾，目前是否还需要以下服务-->
+    <div class="pop-win address-pop" v-if="showR37">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowR37(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowR37(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-3">
+                    <li class="check-li" v-for="a in needServiceA" v-on:click="choR37(a,$event)" v-bind:class="{ ac: a.isC }"  v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-3" v-if="isS372">
+                    <li class="check-li R372-li" v-for="a in needServiceA372" v-on:click="choR371(a,$event)" v-bind:class="{ ac: a.isC }"  v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-3" v-if="isS373">
+                    <li class="check-li R373-li" v-for="a in needServiceA373" v-on:click="choR372(a,$event)" v-bind:class="{ ac: a.isC }"  v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<!-- 你的html代码 -->
+<script type='text/javascript' src='../lib/jquery-1.9.1.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/vue.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-swiper.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-city-picker.js' charset='utf-8'></script>
+<script src="../js/commonCode.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/write5.js"></script>
+</body>
+</html>

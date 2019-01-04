@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>残疾人登记表</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../lib/light7/light7.min.css">
+    <link rel="stylesheet" href="../lib/light7/light7-swiper.min.css">
+
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/common/common.css">
+    <!--<link rel="stylesheet" href="../css/wirte1.css">-->
+    	<style type="text/css">
+    		.item-after{
+    		border: 1px solid #3AB54A;
+    		border-radius: 5px;
+    		
+    	}
+    	.w_isActive{
+    		background-color: #edfdf4!important;
+    	}
+    	.item-after>select,
+    	.item-after>textarea,
+    	.item-after>input{
+    		
+    		padding-left: 4px;;
+    	}
+    	</style>
+</head>
+<body>
+<div class="page d-n"></div>
+<div id="writeG">
+    <div class="h-title">残疾人登记表</div>
+    <div class="h-sub-title">
+        <div class="h-ti-cut"></div>
+        <span>补充问题（7/7）</span>
+    </div>
+    <div class="h-grey"></div>
+    <table class="l-r-table">
+        <!--step1G-->
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG1p"></div> G1.民族</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="nation">
+                <input type="hidden" placeholder="" v-model="nation">
+            </td>
+        </tr>
+        <tr v-if="G2">
+            <td class="item-title"><div class="redPoint" v-if="ifG2p"></div> G2.政治面貌</td>
+        </tr>
+        <tr v-if="G2">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="14周岁及以上填报" id="politicalStatus">
+                <input type="hidden" placeholder="" v-model="politicalStatus">
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG3p"></div> G3.家庭人口(人)</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb" style="position: relative;">
+                <input type="text" placeholder="请输入" v-model="familyPopulation"><i style="position: absolute;font-style: normal;">人</i>
+                	
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG4p"></div> G4.常住详细地址</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请输入常住详细地址" v-model="ress">
+            </td>
+        </tr>
+        <tr v-if="G5">
+            <td class="item-title"><div class="redPoint" v-if="ifG5p"></div> G5.是否是留守儿童</td>
+        </tr>
+        <tr v-if="G5">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="16周岁及以下填报" id="leftBehindChildren">
+                <input type="hidden" placeholder="16周岁及以下填报" v-model="leftBehindChildren">
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG6p"></div> G6.残疾类别及特征（多重残疾多选）</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" id="G6Text" placeholder="请选择" readonly v-on:click="openFea">-->
+                <textarea placeholder="请选择" id="G6Text" readonly v-on:click="openFea"></textarea>
+            </td>
+        </tr>
+        <!--step2G-->
+        <tr v-if="!isFarmer">
+            <td class="item-title" ><div class="redPoint" v-if="ifG7p"></div> G7.目前住房需求</td>
+        </tr>
+        <tr v-if="!isFarmer">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="houseNeed">
+                <input type="hidden" placeholder="" v-model="houseNeed">
+            </td>
+        </tr>
+        <tr v-if="isFarmer">
+            <td class="item-title"><div class="redPoint" v-if="ifG8p"></div> G8.目前住房需求</td>
+        </tr>
+        <tr v-if="isFarmer">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="countryHouseNeed">
+                <input type="hidden" placeholder="" v-model="countryHouseNeed">
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG9p"></div> G9.上年度家庭人均可支配收入（元）</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请输入" id="incomePerHead" v-model="incomePerHead">
+            </td>
+        </tr>
+        <tr v-if='isG10Show'>
+            <td class="item-title"><div class="redPoint" v-if="ifG10p"></div> G10.动态更新年度内是否享受过助（奖）学金</td>
+        </tr>
+        <tr v-if='isG10Show'>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="scholarship">
+                <input type="hidden" placeholder="" v-model="scholarship">
+            </td>
+        </tr>
+        <tr v-if='isG11Show'>
+            <td class="item-title"><div class="redPoint" v-if="ifG11p"></div> G11.教育需求</td>
+        </tr>
+        <tr v-if='isG11Show'>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="6-14周岁未入学残疾儿童填报" id="educationalNeeds">
+                <input type="hidden" placeholder="" v-model="educationalNeeds">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG12p"></div> G12.是否获得职业资格证书</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="professionalCertificate">
+                <input type="hidden" placeholder="" v-model="professionalCertificate">
+            </td>
+        </tr>
+        <tr v-if="isShowG13">
+            <td class="item-title"><div class="redPoint" v-if="ifG13p"></div> G13.获得职业资格证书类型(可多选)</td>
+        </tr>
+        <tr v-if="isShowG13">
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="请选择" id="professionalCertificateType" readonly v-on:click="openShowG13">-->
+                <textarea placeholder="请选择" id="professionalCertificateType" readonly v-on:click="openShowG13"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG14p"></div> G14.创办实体情况</td>
+        </tr>
+        <tr>
+
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="1-6项可多选" id="businessType" readonly v-on:click="openShowG14">-->
+                <textarea placeholder="1-6项可多选" id="businessType" readonly v-on:click="openShowG14"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG15p"></div> G15.目前有哪些社会保障需求</td>
+        </tr>
+        <tr>
+
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="（1-8项可多选）" id="socialSecurityNeed" readonly v-on:click="openShowG15" v-model="G15input">-->
+                <textarea placeholder="（1-8项可多选）" id="socialSecurityNeed" readonly v-on:click="openShowG15"  v-model="G15input"></textarea>
+            </td>
+        </tr>
+        <tr v-if="isSG16">
+            <td class="item-title"><div class="redPoint" v-if="ifG16p"></div> G16.残疾儿童康复项目救助 </td>
+        </tr>
+        <tr v-if="isSG16">
+
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="可多选" id="disabledChildRecure" readonly v-on:click="openShowG16" v-model="G16input">-->
+                <textarea placeholder="可多选" id="disabledChildRecure" readonly v-on:click="openShowG16"  v-model="G16input"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG17p"></div> G17.动态更新年度内是否获得过法律服务</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="getLegalService">
+                <input type="hidden" placeholder="" v-model="getLegalService">
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG18p"></div> G18.目前你有那些法律服务需求</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="1-5项可多选" id="legalServiceNeeds" readonly v-on:click="openShowG18" v-model="G18input">-->
+                <textarea placeholder="1-5项可多选" id="legalServiceNeeds" readonly v-on:click="openShowG18"  v-model="G18input"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG19p"></div> G19.爱好特长</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="请选择" id="like" readonly v-on:click="openShowG19" v-model="G19input">-->
+                <textarea placeholder="请选择" id="like" readonly v-on:click="openShowG19"  v-model="G19input"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifHeightp"></div> 身高(cm)</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请输入" id="height" v-model="height">
+            </td>
+        </tr>
+        <tr>
+            <td class="item-title"><div class="redPoint" v-if="ifG20p"></div> G20.目前文体需求</td>
+        </tr>
+        <tr>
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="1-5项可多选" id="cultureSportsNeeds" readonly v-on:click="openShowG20" v-model="G20input">-->
+                <textarea placeholder="1-5项可多选" id="cultureSportsNeeds" readonly v-on:click="openShowG20"  v-model="G20input"></textarea>
+            </td>
+        </tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+
+    </table>
+
+    <!--残疾类别及特征-->
+    <div class="pop-win" v-if="feaPop">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeFea(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeFea(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-2 featureAOut">
+                    <li class="" v-on:click="feaFun(a.id)" v-for="a in featureA" v-if="a.isF" v-bind:class="{ ac: a.isC}" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="showF1">
+                    <li class="radio-li" v-for="a in featureA1" v-bind:class="{ ac: a.isC}" v-on:click="feaFunC(a,1,$event)" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="showF2">
+                    <li class="radio-li" v-for="a in featureA2" v-bind:class="{ ac: a.isC}" v-on:click="feaFunC(a,2,$event)" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="showF3">
+                    <li class="radio-li" v-for="a in featureA3" v-bind:class="{ ac: a.isC}" v-on:click="feaFunC(a,3,$event)" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="showF4">
+                    <li class="check-li showF4-li" v-for="a in featureA4" v-bind:class="{ ac: a.isC}" v-on:click="feaFunC(a,4,$event)" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="showF5">
+                    <li class="check-li showF5-li" v-for="a in featureA5" v-bind:class="{ ac: a.isC}" v-on:click="feaFunC(a,5,$event)" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="showF6">
+                    <li class="check-li showF6-li" v-for="a in featureA6" v-bind:class="{ ac: a.isC}" v-on:click="feaFunC(a,6,$event)" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--职业资格证书类型-->
+    <div class="pop-win address-pop 13" v-if="showG13">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowG13(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowG13(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-2">
+                    <li class="check-li showG13-li" v-for="a in professionalCertificateTypeA" v-on:click="choG13(a,$event)" v-bind:class="{ ac: a.isC}" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="isDrive">
+                    <li class="check-li showG139-li" v-for="a in driveTypeA" v-on:click="choG139(a,$event)" v-bind:class="{ ac: a.isC}" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="fix-sub">
+        <div class="fix-btn" v-bind:class="{ac:isSub}">提交</div>
+    </div>
+
+    <!--创办实体情况-->
+    <div class="pop-win address-pop" v-if="showG14">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowG14(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowG14(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="radio-li G14-li" v-for="a in businessTypeA" v-on:click="choG14(a,$event)" v-bind:class="{ ac: a.isC}"  v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--目前有哪些社会保障需求-->
+    <div class="pop-win address-pop" v-if="showG15">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowG15(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowG15(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li" v-for="a in socialSecurityNeedA" v-on:click="choG15(a,$event)" v-bind:class="{ac:a.isC}" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <!--残疾儿童康复项目救助-->
+    <div class="pop-win address-pop" v-if="showG16">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowG16(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowG16(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li G16-li" v-for="a in disabledChildRecureA" v-on:click="choG16(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <!--<div class="picker-center-highlight"></div>-->
+            </div>
+        </div>
+    </div>
+
+    <!--目前你有那些法律服务需求-->
+    <div class="pop-win address-pop" v-if="showG18">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowG18(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowG18(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li G18-li" v-for="a in legalServiceNeedsA" v-bind:class="{ ac: a.isC}" v-on:click="choG18(a,$event)" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--爱好特长-->
+    <div class="pop-win address-pop" v-if="showG19">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowG19(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowG19(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-3">
+                    <li class="check-li" v-for="a in G19A" v-on:click="choG19(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-3" v-if="isSG191">
+                    <li class="check-li" v-for="a in G19A1" v-on:click="choG191(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-3" v-if="isSG192">
+                    <li class="check-li" v-for="a in G19A12" v-on:click="choG192(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--目前文体需求-->
+    <div class="pop-win address-pop" v-if="showG20">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowG20(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowG20(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="check-li" v-for="a in cultureSportsNeedsA" v-on:click="choG20(a,$event)" v-bind:class="{ ac: a.isC }" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 你的html代码 -->
+<script type='text/javascript' src='../lib/jquery-1.9.1.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/vue.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-swiper.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-city-picker.js' charset='utf-8'></script>
+<script src="../js/commonCode.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/writeG.js"></script>
+</body>
+</html>

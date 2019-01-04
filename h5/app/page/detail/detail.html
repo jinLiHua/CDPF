@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>残疾人详情</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../../lib/light7/light7.min.css">
+		<link rel="stylesheet" href="../../lib/light7/light7-swiper.min.css">
+		<link rel="stylesheet" href="../../lib/light7/light7.min.css">
+		<link rel="stylesheet" href="../../lib/light7/light7-swiper.min.css">
+		<link rel="stylesheet" href="../../lib/font-awesome/css/font-awesome.min.css">
+
+		<link rel="stylesheet" href="../../css/common/common.css">
+		<link rel="stylesheet" href="../../css/detail.css">
+		<style type="text/css">
+			.item-after {
+				border: 1px solid #3AB54A;
+				border-radius: 5px;
+			}
+			
+			.w_isActive {
+				background-color: #edfdf4!important;
+			}
+			
+			.item-after>select,
+			.item-after>textarea,
+			.item-after>input {
+				padding-left: 4px;
+				;
+			}
+			
+			div.f-rBoder {
+				border: none;
+			}
+			
+			.itemArea,
+			.h-bb,
+			.h-b {
+				background-color: #edfdf4;
+			}
+			
+			.h-b>span,
+			.h-bb>span {
+				padding-left: 4px;
+			}
+			
+			.list {
+				margin: 10px 0;
+			}
+			
+			.vertifiled {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 0.8rem;
+				margin: 0 auto;
+			}
+			
+			.vertifiled button {
+				padding: 0.2rem 0.4rem;
+				background-color: #3AB54A;
+				color: #fff;
+				outline: none;
+				border: none;
+				border-radius: 0.2rem;
+				margin: 0.1rem 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="page d-n"></div>
+		<div id="detail">
+			<div class="h-title">{{list1.name}}</div>
+			<div class="h-grey"></div>
+			<div class="l1 list">
+				<div class="h-sub-title" v-on:click="openTable($event)">
+					<div class="item-title d-i">
+						<div class="h-ti-cut"></div>
+						<span>个人基本情况</span>
+					</div>
+					<div class="t-r item-after d-i f-r f-rBoder">
+						<span class="text-to"><div class="redPoint" v-if="list1.if1p"></div> 展开</span>
+					</div>
+				</div>
+				<table class="l-r-table t1" style="display: none">
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifStatusp"></div> 标注状态</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.perSta}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifsur"></div> 调查方式</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.surveyMethod}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR1p"></div>
+							<a href="javascript:;" data-code="R1" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R1.姓名</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.name}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifSexp"></div> 性别</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.gender}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR2p"></div>
+							<a href="javascript:;" data-code="R2" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R2.残疾人证号或身份证号</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.disabilityCard}}</span>
+						</td>
+
+					</tr>
+					<tr v-if="list1.grade">
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifGradep"></div> 残疾人等级</td>
+					</tr>
+					<tr v-if="list1.grade">
+
+						<td class="item-after h-bb">
+							<span>{{list1.gradeNum}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR3p"></div>
+							<a href="javascript:;" data-code="R3" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R3.户口性质</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list1.residenceType}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifG4p"></div>地址</td>
+					</tr>
+					<tr>
+						<td class="item-after itemArea">
+							<span>{{list1.areaName}}</span>
+						</td>
+
+					</tr>
+					<tr v-if="list1.isR4">
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR4p"></div>
+							<a href="javascript:;" data-code="R4" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R4.婚姻状况</td>
+					</tr>
+					<tr v-if="list1.isR4">
+						<td class="item-after h-bb">
+							<span>{{list1.maritalStatus}}</span>
+						</td>
+
+					</tr>
+					<tr v-if="list1.R5">
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR5p"></div>
+							<a href="javascript:;" data-code="R5" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R5.联系人姓名</td>
+					</tr>
+					<tr v-if="list1.R5">
+						<td class="item-after h-bb">
+							<span>{{list1.linkmanName}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR6p"></div>
+							<a href="javascript:;" data-code="R6" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R6.本人或联系人固话</td>
+					</tr>
+					<tr>
+						<td class="item-after  h-bb">
+							<span>{{list1.phone}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR62p"></div> 本人或联系人手机</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.cellphone}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR63p"></div> 本人或联系人邮箱</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.email}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list1.ifR7p"></div>
+							<a href="javascript:;" data-code="R7" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R7.是否在敬(养)老院、福利院、荣军院等居住</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list1.isWelfareHouse}}</span>
+						</td>
+
+					</tr>
+				</table>
+			</div>
+			<div v-if="is3569" class="h-grey"></div>
+			<div v-if="is3569" class="l2 list">
+				<div class="h-sub-title" v-on:click="openTable($event)">
+					<div class="item-title d-i">
+						<div class="h-ti-cut"></div>
+						<span>经济、住房、教育</span>
+					</div>
+					<div class="t-r item-after d-i f-r f-rBoder">
+						<span class="text-to"><div class="redPoint" v-if="list2.if2p"></div> 展开</span>
+					</div>
+				</div>
+				<!--非农业户口填报-->
+				<table v-if="is3569" class="l-r-table  t2" style="display: none">
+					<tr v-if="!list2.isFarmer">
+						<td class="item-title">
+							<div class="redPoint" v-if="list2.ifR8p"></div>
+							<a href="javascript:;" data-code="R8" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R8.家庭收入情况</td>
+					</tr>
+					<tr v-if="!list2.isFarmer">
+						<td class=" item-after h-bb">
+							<span>{{list2.townFamilyIncome}}</span>
+						</td>
+					</tr>
+					<tr v-if="!list2.isFarmer">
+						<td class="item-title">
+							<div class="redPoint" v-if="list2.ifR9p"></div>
+							<a href="javascript:;" data-code="R9" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R9.家庭住房情况</td>
+					</tr>
+					<tr v-if="!list2.isFarmer">
+						<td class="item-after h-bb">
+							<span>{{list2.townFamilyHouse}}</span>
+						</td>
+					</tr>
+					<tr v-if="list2.isFarmer">
+						<td class="item-title">
+							<div class="redPoint" v-if="list2.ifR10p"></div>
+							<a href="javascript:;" data-code="R10" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R10.贫困与建档立卡情况</td>
+					</tr>
+					<tr v-if="list2.isFarmer">
+						<td class="item-after h-bb">
+							<span>{{list2.poorArchivingSituation}}</span>
+						</td>
+					</tr>
+					<tr v-if="list2.isFarmer">
+						<td class="item-title">
+							<div class="redPoint" v-if="list2.ifR11p"></div>
+							<a href="javascript:;" data-code="R11" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R11.家庭住房情况</td>
+					</tr>
+					<tr v-if="list2.isFarmer">
+						<td class="item-after h-bb">
+							<span>{{list2.countryFamilyHouse}}</span>
+						</td>
+					</tr>
+				</table>
+				<table v-if="is3" class="l-r-table" style="display: none">
+					<tr v-if="list3.isRead">
+						<td class="item-title">
+							<div class="redPoint" v-if="list3.ifR12p"></div>
+							<a href="javascript:;" data-code="R12" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R12.是否识字</td>
+					</tr>
+					<tr v-if="list3.isRead">
+						<td class="item-after h-bb">
+							<span>{{list3.learnToRead}}</span>
+						</td>
+					</tr>
+					<tr v-if="list3.isRead">
+						<td class="item-title">
+							<div class="redPoint" v-if="list3.ifR13p"></div>
+							<a href="javascript:;" data-code="R13" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R13.受教育程度</td>
+					</tr>
+					<tr v-if="list3.isRead">
+						<td class="item-after h-bb">
+							<span>{{list3.educationalBackground}}</span>
+						</td>
+					</tr>
+					<tr v-if="list3.isR131">
+						<td class="item-title">
+							<div class="redPoint" v-if="list3.ifR14p"></div>
+							<a href="javascript:;" data-code="R14" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R14.就读学校</td>
+					</tr>
+					<tr v-if="list3.isR131">
+						<td class="item-after h-bb">
+							<span>{{list3.school}}</span>
+						</td>
+					</tr>
+					<tr v-if="list3.age614">
+						<td class="item-title">
+							<div class="redPoint" v-if="list3.ifR15p"></div>
+							<a href="javascript:;" data-code="R15" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R15.未入学主要原因</td>
+					</tr>
+					<tr v-if="list3.age614">
+						<td class="item-after h-bb">
+							<span>{{list3.noSchoolCausation}}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div v-if="is4" class="h-grey"></div>
+			<div v-if="is4" class="l3 list">
+				<div class="h-sub-title" v-on:click="openTable($event)">
+					<div class="item-title d-i">
+						<div class="h-ti-cut"></div>
+						<span>就业扶贫</span>
+					</div>
+					<div class="t-r item-after d-i f-r f-rBoder">
+						<span class="text-to"><div class="redPoint" v-if="list3.if3p"></div> 展开</span>
+					</div>
+				</div>
+				<table class="l-r-table" style="display: none">
+					<td class="item-title">
+						<div class="redPoint" v-if="list4.ifR16p"></div>
+						<a href="javascript:;" data-code="R16" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R16.是否就业</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list4.haveJob}}</span>
+						</td>
+					</tr>
+					<tr v-if="list4.isFarmerGo18">
+						<td class="item-title">
+							<div class="redPoint" v-if="list4.ifR162p"></div> 是否进行失业登记（城镇户口填报）：</td>
+					</tr>
+					<tr v-if="list4.isFarmerGo18">
+						<td class="item-after h-bb">
+							<span>{{list4.unempRegistration}}</span>
+						</td>
+					</tr>
+					<tr v-if="list4.goR18">
+						<td class="item-title">
+							<div class="redPoint" v-if="list4.ifR17p"></div>
+							<a href="javascript:;" data-code="R17" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R17.残疾人就业形式</td>
+					</tr>
+					<tr v-if="list4.goR18">
+						<td class="item-after h-bb">
+							<span>{{list4.disabilityJobType}}</span>
+						</td>
+					</tr>
+					<tr v-if="list4.goR20">
+						<td class="item-title">
+							<div class="redPoint" v-if="list4.ifR18p"></div>
+							<a href="javascript:;" data-code="R18" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R18.未就业主要生活来源</td>
+					</tr>
+					<tr v-if="list4.goR20">
+						<td class="item-after h-bb">
+							<span>{{list4.sourceOfIncome}}</span>
+						</td>
+					</tr>
+					<tr v-if="list4.goR20">
+						<td class="item-title">
+							<div class="redPoint" v-if="list4.ifR19p"></div>
+							<a href="javascript:;" data-code="R19" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R19.未就业主要原因</td>
+					</tr>
+					<tr v-if="list4.goR20">
+						<td class="item-after h-bb">
+							<span>{{list4.noJobCausation}}</span>
+						</td>
+					</tr>
+					<tr v-if="list4.goR22">
+						<td class="item-title">
+							<div class="redPoint" v-if="list4.ifR20p"></div>
+							<a href="javascript:;" data-code="R20" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R20.动态更新年度内得到的就业扶贫帮扶 </td>
+					</tr>
+					<tr v-if="list4.goR22">
+						<td class="item-after h-bb">
+							<span>{{list4.helpJobPoor}}</span>
+						</td>
+					</tr>
+					<tr v-if="list4.goR22">
+						<td class="item-title">
+							<div class="redPoint" v-if="list4.ifR21p"></div>
+							<a href="javascript:;" data-code="R21" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R21.目前就业扶贫需求 </td>
+					</tr>
+					<tr v-if="list4.goR22">
+						<td class="item-after h-bb">
+							<span>{{list4.jobPoorNeeds}}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div v-if="is5" class="h-grey"></div>
+			<div v-if="is5" class="l4 list">
+				<div class="h-sub-title" v-on:click="openTable($event)">
+					<div class="item-title d-i">
+						<div class="h-ti-cut"></div>
+						<span>社会保障</span>
+					</div>
+					<div class="item-after d-i f-r f-rBoder">
+						<span class="text-to"><div class="redPoint" v-if="list4.if4p"></div> 展开</span>
+					</div>
+				</div>
+				<table class="l-r-table" style="display: none">
+					<tr v-if="list5.isShowR22">
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR22p"></div>
+							<a href="javascript:;" data-code="R22" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R22.是否参加职工社会保险</td>
+					</tr>
+					<tr v-if="list5.isShowR22">
+						<td class="item-after h-bb">
+							<span>{{list5.securityOfSubsistence}}</span>
+						</td>
+					</tr>
+					<tr v-if="list5.isShowR23">
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR23p"></div>
+							<a href="javascript:;" data-code="R23" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R23.是否参加城乡居民养老保险</td>
+					</tr>
+					<tr v-if="list5.isShowR23">
+						<td class="item-after h-bb">
+							<span>{{list5.endowmentInsurance}}</span>
+						</td>
+					</tr>
+					<tr v-if="list5.isShowR24">
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR24p"></div>
+							<a href="javascript:;" data-code="R24" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R24.是否享受城乡居民养老保险缴费补贴</td>
+					</tr>
+					<tr v-if="list5.isShowR24">
+						<td class="item-after h-bb">
+							<span>{{list5.endowmentInsuranceSubsidy}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR25p"></div>
+							<a href="javascript:;" data-code="R25" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R25.是否参加医疗保险（城乡居民/新农合）</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list5.medicalInsurance}}</span>
+						</td>
+					</tr>
+					<tr v-if="list5.isShowR26">
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR26p"></div>
+							<a href="javascript:;" data-code="R26" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R26.是否享受医疗保险缴费补贴</td>
+					</tr>
+					<tr v-if="list5.isShowR26">
+						<td class="item-after h-bb">
+							<span>{{list5.medicalInsuranceSubsidy}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR27p"></div>
+							<a href="javascript:;" data-code="R27" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R27.动态更新年度内社会救助及住房改善情况</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list5.socialAssistance}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR28p"></div>
+							<a href="javascript:;" data-code="R28" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R28.动态更新年度内社会福利补贴情况</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list5.socialWelfareutiSubsidy}}</span>
+						</td>
+					</tr>
+					<tr v-if="list5.isShowR29">
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR29p"></div>
+							<a href="javascript:;" data-code="R29" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R29.是否享受托养服务</td>
+					</tr>
+					<tr v-if="list5.isShowR29">
+						<td class="item-after h-bb">
+							<span>{{list5.supportServiceNeeds}}</span>
+						</td>
+					</tr>
+					<tr v-if="list5.isShowR30">
+						<td class="item-title">
+							<div class="redPoint" v-if="list5.ifR30p"></div>
+							<a href="javascript:;" data-code="R30" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R30.目前托养服务需求</td>
+					</tr>
+					<tr v-if="list5.isShowR30">
+						<td class="item-after h-bb">
+							<span>{{list5.supportServiceType}}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div v-if="is6" class="h-grey"></div>
+			<div v-if="is6" class="l5 list">
+				<div class="h-sub-title" v-on:click="openTable($event)">
+					<div class="item-title d-i">
+						<div class="h-ti-cut"></div>
+						<span>基本医疗与康复</span>
+					</div>
+					<div class="t-r item-after d-i f-r f-rBoder">
+						<span class="text-to"><div class="redPoint" v-if="list5.if5p"></div> 展开</span>
+
+					</div>
+				</div>
+				<table class="l-r-table" style="display: none">
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list6.ifR31p"></div>
+							<a href="javascript:;" data-code="R31" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R31.个人或家庭是否签订家庭医生服务协议</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list6.familyDoctor}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list6.ifR32p"></div>
+							<a href="javascript:;" data-code="R32" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R32.除残疾外，过去两周内是否患有其他疾病</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list6.otherDisease}}</span>
+						</td>
+					</tr>
+					<tr v-if="list6.isSR33">
+						<td class="item-title">
+							<div class="redPoint" v-if="list6.ifR33p"></div>
+							<a href="javascript:;" data-code="R33" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R33.过去两周内是否已就诊或治疗</td>
+					</tr>
+					<tr v-if="list6.isSR33">
+						<td class="item-after h-bb">
+							<span>{{list6.treat}}</span>
+						</td>
+					</tr>
+					<tr v-if="list6.isSR34">
+						<td class="item-title">
+							<div class="redPoint" v-if="list6.ifR34p"></div>
+							<a href="javascript:;" data-code="R34" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R34.未就诊或治疗原因</td>
+					</tr>
+					<tr v-if="list6.isSR34">
+						<td class="item-after h-bb">
+							<span>{{list6.untreatedCause}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list6.ifR35p"></div>
+							<a href="javascript:;" data-code="R35" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R35.针对自身残疾，动态更新年度内是否得到或使用过以下服务</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list6.useService}}</span>
+						</td>
+					</tr>
+					<tr v-if="list6.isSR36">
+						<td class="item-title">
+							<div class="redPoint" v-if="list6.ifR36p"></div>
+							<a href="javascript:;" data-code="R36" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R36.未得到康复服务的原因</td>
+					</tr>
+					<tr v-if="list6.isSR36">
+						<td class="item-after h-bb">
+							<span>{{list6.notRecoveredCause}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list6.ifR37p"></div>
+							<a href="javascript:;" data-code="R37" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R37.针对自身残疾，目前是否还需要以下服务</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list6.needService}}</span>
+						</td>
+
+					</tr>
+				</table>
+
+			</div>
+			<div class="h-grey"></div>
+			<div class="l6 list">
+				<div class="h-sub-title" v-on:click="openTable($event)">
+					<div class="item-title d-i">
+						<div class="h-ti-cut"></div>
+						<span>无障碍、文化体育、附属信息</span>
+					</div>
+					<div class="t-r item-after d-i f-r f-rBoder">
+						<span class="text-to"><div class="redPoint" v-if="list6.if6p"></div> 展开</span>
+
+					</div>
+				</div>
+				<table v-if="is3569" class="l-r-table" style="display: none">
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list7.ifR38p"></div>
+							<a href="javascript:;" data-code="R38" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R38.动态更新年度内你家是否进行过无障碍改造</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list7.barrierFreeModification}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list7.ifR39p"></div>
+							<a href="javascript:;" data-code="R39" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R39.目前你家有哪些无障碍改造需求</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list7.barrierFreeModificationNeeds}}</span>
+						</td>
+					</tr>
+				</table>
+				<table v-if="is8" class="l-r-table" style="display: none">
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list8.ifR40p"></div>
+							<a href="javascript:;" data-code="R40" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R40.动态更新年度内是否经常参加村（社区）组织的文化体育活动</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list8.jionCultureSports}}</span>
+						</td>
+					</tr>
+					<tr v-if="list8.isSR41">
+						<td class="item-title">
+							<div class="redPoint" v-if="list8.ifR41p"></div>
+							<a href="javascript:;" data-code="R41" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R41.不能经常参加村（社区）组织的文化体育活动的原因</td>
+					</tr>
+					<tr v-if="list8.isSR41">
+						<td class="item-after h-bb">
+							<span>{{list8.notJionCultureSportsCause}}</span>
+						</td>
+
+					</tr>
+				</table>
+				<table class="l-r-table" style="display: none">
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list9.ift1"></div> 户主姓名</td>
+					</tr>
+					<tr>
+						<td class="item-after h-bb">
+							<span>{{list9.householdRegisterName}}</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list9.ift2"></div> 身份证号</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list9.idCard}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list9.ift3"></div> 申报人</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list9.declarant}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list9.ift4"></div> 信息采集员</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list9.infoAcquisitionMan}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list9.ift5"></div> 报出日期</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list9.submitDate}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div class="redPoint" v-if="list9.ift6"></div> 调查备注</td>
+					</tr>
+					<tr>
+
+						<td class="item-after h-bb">
+							<span>{{list9.note}}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="item-title">
+							<div v-if="listImage.imgUrl1 || listImage.imgUrl2 || listImage.imgUrl3"></div> 相关照片</td>
+					</tr>
+					<tr>
+						<td class="t-r item-after" style="padding: 0;border: none;">
+							<div class="allPic">
+								<span class="photo" v-if="listImage.imgUrl1">
+                		<img v-bind:src="listImage.imgUrl1" class="imgUrl" v-on:click="dPhoto(1)"/>
+                		<img v-bind:src="listImage.imgUrl1"class="dImg" v-if="listImage.dImg1" v-on:click="dPhoto(-1)"/>
+                		<!--<i class="delatedPic" v-on:click='delatedPic(1)'>×</i>-->
+                	</span>
+								<span class="photo" v-if="listImage.imgUrl2">
+                		<img v-bind:src="listImage.imgUrl2" class="imgUrl" v-on:click="dPhoto(2)"/>
+                		<img v-bind:src="listImage.imgUrl2" class="dImg" v-if="listImage.dImg2" v-on:click="dPhoto(-2)"/>
+                	<!--<i class="delatedPic" v-on:click='delatedPic(2)'>×</i>-->
+                	</span>
+								<span class="photo" v-if="listImage.imgUrl3">
+                		<img v-bind:src="listImage.imgUrl3" class="imgUrl" v-on:click="dPhoto(3)"/>
+                		<img v-bind:src="listImage.imgUrl3" class="dImg" v-if="listImage.dImg3" v-on:click="dPhoto(-3)"/>
+                		<!--<i class="delatedPic" v-on:click='delatedPic(3)'>×</i>-->
+                	</span>
+								<!--<span class="addPic" v-on:click='getPic' v-if="!imgUrl1 || !imgUrl2 || !imgUrl3"> + </span>-->
+
+								<!--</div>-->
+								<!--</td>-->
+								<!--</tr>-->
+				</table>
+				</div>
+				<div v-if="is3569" class="h-grey"></div>
+				<div v-if="is3569" class="l7 list">
+					<div class="h-sub-title" v-on:click="openTable($event)">
+						<div class="item-title d-i">
+							<div class="h-ti-cut"></div>
+							<span>补充问题</span>
+						</div>
+						<div class="t-r item-after d-i f-r f-rBoder">
+							<span class="text-to"><div class="redPoint" v-if="listG.ifGp"></div> 展开</span>
+						</div>
+					</div>
+
+					<table class="l-r-table t7" style="display: none">
+						<tr>
+							<td class="item-title">
+								<div class="redPoint" v-if="list1.ifG1p"></div> G1.民族</td>
+						</tr>
+						<tr>
+
+							<td class="item-after h-bb">
+								<span>{{listG.nation}}</span>
+							</td>
+						</tr>
+						<tr v-if="list1.G2">
+							<td class="item-title">
+								<div class="redPoint" v-if="listG.ifG2p"></div> G2.政治面貌</td>
+						</tr>
+						<tr v-if="list1.G2">
+							<td class="item-after h-bb">
+								<span>{{listG.politicalStatus}}</span>
+							</td>
+
+						</tr>
+						<tr>
+							<td class="item-title ">
+								<div class="redPoint" v-if="listG.ifG3p"></div> G3.家庭人口(人)</td>
+						</tr>
+						<tr>
+							<td class="item-after h-b">
+								<span>{{listG.familyPopulation}}</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="item-title">
+								<div class="redPoint" v-if="listG.ifG4p"></div> G4.常住详细地址</td>
+						</tr>
+						<tr>
+							<td class="item-after h-b">
+								<span>{{listG.address}}</span>
+							</td>
+
+						</tr>
+						<tr v-if="list1.G5">
+							<td class="item-title">
+								<div class="redPoint" v-if="listG.ifG5p"></div> G5.是否是留守儿童</td>
+						</tr>
+						<tr v-if="list1.G5">
+							<td class="item-after h-bb">
+								<span>{{listG.leftBehindChildren}}</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="item-title">
+								<div class="redPoint" v-if="listG.ifG6p"></div> G6.残疾类别及特征（多重残疾多选）</td>
+						</tr>
+						<tr>
+							<td class="item-after h-b">
+								<span>{{listG.feathName}}</span>
+							</td>
+						</tr>
+
+						<tr v-if="!list2.isFarmer">
+							<td class="item-title">
+								<div class="redPoint" v-if="listG.ifG7p"></div> G7.目前住房需求</td>
+						</tr>
+						<tr v-if="!list2.isFarmer">
+							<td class="item-after h-bb">
+								<span>{{listG.houseNeed}}</span>
+							</td>
+						</tr>
+
+						<tr v-if="list2.isFarmer">
+							<td class="item-title">
+								<div class="redPoint" v-if="listG.ifG8p"></div> G8.目前住房需求</td>
+						</tr>
+						<tr v-if="list2.isFarmer">
+							<td class="item-after h-bb">
+								<span>{{listG.countryHouseNeed}}</span>
+							</td>
+						</tr>
+						<tr>
+
+							<tr>
+								<td class="item-title">
+									<div class="redPoint" v-if="listG.ifG9p"></div> G9.上年度家庭人均可支配收入（元）</td>
+							</tr>
+							<tr>
+
+								<td class="item-after h-b">
+									<span>{{listG.incomePerHead}}</span>
+								</td>
+							</tr>
+
+							<tr v-if="list3.isR131">
+								<td class="item-title">
+									<div class="redPoint" v-if="listG.ifG10p"></div> G10.动态更新年度内是否享受过助（奖）学金</td>
+							</tr>
+							<tr v-if="list3.isR131">
+								<td class="item-after h-bb">
+									<span>{{listG.scholarship}}</span>
+								</td>
+							</tr>
+
+							<tr v-if="list3.age614">
+								<td class="item-title">
+									<div class="redPoint" v-if="listG.ifG11p"></div> G11.教育需求</td>
+							</tr>
+							<tr v-if="list3.age614">
+								<td class="item-after h-b">
+									<span>{{listG.educationalNeeds}}</span>
+								</td>
+							</tr>
+							<tr>
+								<td class="item-title">
+									<div class="redPoint" v-if="listG.ifG12p"></div> G12.是否获得职业资格证书</td>
+							</tr>
+							<tr>
+								<td class="item-after h-bb">
+									<span>{{listG.professionalCertificate}}</span>
+								</td>
+							</tr>
+							<tr v-if="listG.isShowG13">
+								<td class="item-title">
+									<div class="redPoint" v-if="listG.ifG13p"></div> G13.获得职业资格证书类型</td>
+							</tr>
+							<tr v-if="listG.isShowG13">
+								<td class="item-after h-bb">
+									<span>{{listG.professionalCertificateType}}</span>
+								</td>
+							</tr>
+							<tr>
+								<tr v-if="list4.goR18">
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifG14p"></div> G14.创办实体情况</td>
+								</tr>
+								<tr v-if="list4.goR18">
+									<td class="item-after h-bb">
+										<span>{{listG.businessType}}</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifG15p"></div> G15.目前有哪些社会保障需求</td>
+								</tr>
+								<tr>
+
+									<td class="item-after h-bb">
+										<span>{{listG.socialSecurityNeed}}</span>
+									</td>
+								</tr>
+								<tr v-if="list6.isSG16">
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifG16p"></div> G16.残疾儿童康复项目救助 </td>
+								</tr>
+								<tr v-if="list6.isSG16">
+									<td class="item-after h-bb">
+										<span>{{listG.disabledChildRecure}}</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifG17p"></div> G17.动态更新年度内是否获得过法律服务</td>
+								</tr>
+								<tr>
+
+									<td class="item-after h-bb">
+										<span>{{listG.getLegalService}}</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifG18p"></div> G18.目前你有那些法律服务需求</td>
+								</tr>
+								<tr>
+
+									<td class="item-after h-bb">
+										<span>{{listG.legalServiceNeeds}}</span>
+									</td>
+								</tr>
+
+								<tr>
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifG19p"></div> G19.爱好特长</td>
+								</tr>
+								<tr>
+
+									<td class="item-after h-bb">
+										<span>{{listG.like}}</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifHeightp"></div> 身高（cm）</td>
+								</tr>
+								<tr>
+
+									<td class="item-after h-bb">
+										<span>{{listG.height}}</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="item-title">
+										<div class="redPoint" v-if="listG.ifG20p"></div> G20.目前文体需求</td>
+								</tr>
+								<tr>
+
+									<td class="item-after h-bb">
+										<span>{{listG.cultureSportsNeeds}}</span>
+									</td>
+								</tr>
+					</table>
+				</div>
+				<div class="h-grey"></div>
+				<div class="vertifiled h-sub-title" v-if="zibao">
+					<button v-on:click="vertifiled">审核通过</button>
+				</div>
+				<div class="h-grey" v-if="zibao"></div>
+			</div>
+
+	</body>
+	<script type='text/javascript' src='../../lib/jquery-1.9.1.min.js' charset='utf-8'></script>
+	<script type='text/javascript' src='../../lib/vue.js' charset='utf-8'></script>
+	<script type='text/javascript' src='../../lib/light7/light7.min.js' charset='utf-8'></script>
+	<script type='text/javascript' src='../../lib/light7/light7-swiper.min.js' charset='utf-8'></script>
+	<script type='text/javascript' src='../../lib/light7/light7-city-picker.js' charset='utf-8'></script>
+	<script src="../../js/commonCode.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/detail/detail.js"></script>
+
+</html>

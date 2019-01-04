@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>残疾人登记表</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../lib/light7/light7.min.css">
+    <link rel="stylesheet" href="../lib/light7/light7-swiper.min.css">
+
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/common/common.css">
+    <!--<link rel="stylesheet" href="../css/wirte1.css">-->
+    	<style type="text/css">
+    		.item-after{
+    		border: 1px solid #3AB54A;
+    		border-radius: 5px;
+    	}
+    	.w_isActive{
+    		background-color: #edfdf4!important;
+    	}
+    	.item-after>select,
+    	.item-after>textarea,
+    	.item-after>input{
+    		padding-left: 4px;;
+    	}
+    	</style>
+</head>
+<body>
+<div class="page d-n"></div>
+<div id="write1">
+    <div class="h-title">残疾人登记表</div>
+    <div class="h-sub-title">
+        <div class="h-ti-cut"></div>
+        <span> 经济、住房、教育（2/7）</span>
+    </div>
+    <div class="h-grey"></div>
+    <!--非农业户口填报-->
+    <table class="l-r-table">
+        <tr v-if="!isFarmer && isWelfareHouse == 2">
+            <td class="item-title" v-bind:class="{ redWord: !R8check}"><div class="redPoint" v-if="ifR8p"></div><a href="javascript:;" data-code="R8" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R8.家庭收入情况</td>
+        </tr>
+        <tr v-if="!isFarmer && isWelfareHouse == 2">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="townFamilyIncome">
+                <input type="hidden" placeholder="" v-model="townFamilyIncome">
+            </td>
+        </tr>
+        <tr v-if="!isFarmer && isWelfareHouse == 2 && hasInfo">
+            <td class="item-after h-bb">
+                <span class="redTipSAdd">{{R8Tip}}</span>
+            </td>
+        </tr>
+        <tr v-if="!isFarmer && isWelfareHouse == 2">
+            <td class="item-title" v-bind:class="{ redWord: !R9check}"><div class="redPoint" v-if="ifR9p"></div><a href="javascript:;" data-code="R9" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R9.家庭住房情况</td>
+        </tr>
+        <tr v-if="!isFarmer && isWelfareHouse == 2">
+            <td class="t-r item-after h-bb">
+                <!--<input type="text" placeholder="请选择" readonly id="R9" v-on:click="openShowR9">-->
+                <textarea placeholder="请选择" id="R9" readonly v-on:click="openShowR9"></textarea>
+            </td>
+        </tr>
+        <tr v-if="isFarmer && isWelfareHouse == 2">
+            <td class="item-title" v-bind:class="{ redWord: !R10check}"><div class="redPoint" v-if="ifR10p"></div><a href="javascript:;" data-code="R10" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R10.贫困与建档立卡情况</td>
+        </tr>
+        <tr v-if="isFarmer && isWelfareHouse == 2">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="poorArchivingSituation">
+                <input type="hidden" placeholder="" v-model="poorArchivingSituation" >
+            </td>
+        </tr>
+        <tr v-if="isFarmer && isWelfareHouse == 2 && hasInfo">
+            <td class="item-after h-bb">
+                <span class="redTipSAdd">{{R10Tip}}</span>
+            </td>
+        </tr>
+        <tr v-if="isFarmer && isWelfareHouse == 2">
+            <td class="item-title" v-bind:class="{ redWord: !R11check}"><div class="redPoint" v-if="ifR11p"></div><a href="javascript:;" data-code="R11" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R11.家庭住房情况</td>
+        </tr>
+        <tr v-if="isFarmer && isWelfareHouse == 2">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="countryFamilyHouse">
+                <input type="hidden" placeholder="" v-model="countryFamilyHouse">
+            </td>
+        </tr>
+        <tr v-if="isRead">
+            <td class="item-title" v-bind:class="{ redWord: !R12Check}"><div class="redPoint" v-if="ifR12p"></div><a href="javascript:;" data-code="R12" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R12.是否识字</td>
+        <tr v-if="isRead">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="15周岁及以上填报" id="learnToRead">
+                <input type="hidden" placeholder="" v-model="learnToRead">
+            </td>
+        </tr>
+        </tr>
+        <tr v-if="isRead">
+            <td class="item-title " v-bind:class="{ redWord: !R13Check}"><div class="redPoint" v-if="ifR13p"></div><a href="javascript:;" data-code="R13" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R13.受教育程度</td>
+        </tr>
+        <tr v-if="isRead">
+
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="15周岁及以上填报" readonly id="educationalBackground" v-on:click="openShowR13">
+            </td>
+        </tr>
+        <tr v-if="isR131">
+            <td class="item-title " v-bind:class="{ redWord: !R14Check}"><div class="redPoint" v-if="ifR14p"></div><a href="javascript:;" data-code="R14" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R14.就读学校</td>
+        </tr>
+        <tr v-if="isR131">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="请选择" id="R14" readonly v-on:click="openShowR14">
+            </td>
+        </tr>
+
+        <tr v-if="R15G11">
+            <td class="item-title" v-bind:class="{ redWord: !R15Check}"><div class="redPoint" v-if="ifR15p"></div><a href="javascript:;" data-code="R15" class="tips"><i class="fa fa-question-circle" aria-hidden="true"></i></a> R15.未入学主要原因</td>
+        </tr>
+        <tr v-if="R15G11">
+            <td class="t-r item-after h-bb">
+                <input type="text" placeholder="6-14周岁未入学残疾儿童填报" id="noSchoolCausation">
+                <input type="hidden" placeholder="" v-model="noSchoolCausation">
+            </td>
+        </tr>
+
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+    </table>
+    <div class="fix-sub">
+        <div class="fix-btn" v-bind:class="{ac:isSub}">提交并下一项</div>
+    </div>
+    <!--城镇家庭住房情况-->
+    <div class="pop-win address-pop" v-if="showR9">
+        <div class="picker-modal picker-columns modal-in" style="display: block!important;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowR9(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowR9(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-2">
+                    <li class="radio-li" v-on:click="tFh(a,$event)" v-for="a in townFamilyHouseA" v-bind:class="{ ac: a.isC}" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="isR92">
+                    <li class="check-li R92-li" v-on:click="tFh2(a,$event)" v-for="a in townFamilyHouseA2" v-bind:class="{ ac: a.isC}" v-bind:data-id="a.id">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--就读学校-->
+    <div class="pop-win address-pop" v-if="showR14">
+        <div class="picker-modal picker-columns modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowR14(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowR14(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-2">
+                    <li class="radio-li" v-bind:class="{ ac: isc0}" data-id="1" v-on:click="cSchool(1,$event)">普通教育机构</li>
+                    <li class="radio-li" data-id="2" v-bind:class="{ ac: isc1}" v-on:click="cSchool(2,$event)">特殊教育机构</li>
+                </ul>
+                <ul class="d-i ul-2" v-if="isR142">
+                    <li class="radio-li readSc" v-bind:class="{ac : cScA[0]}" data-id="1" v-if="cScAf[0]" v-on:click="cSc(1,'学前',$event)">学前</li>
+                    <li class="radio-li readSc" data-id="2" v-bind:class="{ac : cScA[1]}" v-if="cScAf[1]" v-on:click="cSc(2,'小学',$event)">小学</li>
+                    <li class="radio-li readSc" data-id="3" v-bind:class="{ac : cScA[2]}" v-if="cScAf[2]" v-on:click="cSc(3,'初中',$event)">初中</li>
+                    <li class="radio-li readSc" data-id="4" v-bind:class="{ac : cScA[3]}" v-if="cScAf[3]" v-on:click="cSc(4,'高中',$event)">高中阶段（含普通教育、职业教育）</li>
+                    <li class="radio-li readSc" data-id="5" v-bind:class="{ac : cScA[4]}" v-if="cScAf[4]" v-on:click="cSc(5,'大学专科',$event)" v-if="isRead">大学专科</li>
+                    <li class="radio-li readSc" data-id="6" v-bind:class="{ac : cScA[5]}" v-if="cScAf[5]" v-on:click="cSc(6,'大学本科及以上',$event)" v-if="isRead">大学本科及以上</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--受教育程度-->
+    <div class="pop-win address-pop" v-if="showR13">
+        <div class="picker-modal picker-columns  remove-on-close modal-in" style="display: block;">
+            <header class="bar bar-nav">
+                <button class="button button-link pull-left  close-pop-cancel" v-on:click="closeShowR13(0)">取消</button>
+                <button class="button button-link pull-right close-pop-add" v-on:click="closeShowR13(1)">确定</button>
+            </header>
+            <div style="height: 100%">
+                <ul class="d-i ul-1">
+                    <li class="radio-li" v-for="a in edulist" v-bind:class="{ ac: a.isC}" v-bind:data-id="a.id" v-on:click="chR13(a,$event)">{{a.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 你的html代码 -->
+<script type='text/javascript' src='../lib/jquery-1.9.1.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/vue.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-swiper.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../lib/light7/light7-city-picker.js' charset='utf-8'></script>
+
+<script src="../js/commonCode.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/write2.js"></script>
+</body>
+</html>
